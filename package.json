@@ -1,0 +1,24 @@
+{
+  "name": "mywarrior",
+  "version": "1.0.0",
+  "description": "warrior.js.org",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./warriorjs/",
+    "lint:fix": "eslint --fix ./warriorjs/",
+    "start": "warriorjs"
+  },
+  "author": "Ivar Nilsen",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^4.19.1",
+    "warriorjs": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.9.1"
+  }
+}
