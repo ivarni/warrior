@@ -31,6 +31,17 @@ class Player {
         return false;
     }
 
+    enemyInRange() {
+        const units = this.warrior.look()
+            .filter(space => space.isUnit())
+            .map(space => ([space.getUnit().isBound(), space.getUnit().isEnemy()]));
+
+        const enemyIndex = units.findIndex(([,enemy]) => enemy);
+        const captiveIndex = units.findIndex(([bound]) => bound);
+
+        return enemyIndex !== -1 && (captiveIndex === -1 || enemyIndex < captiveIndex);
+    }
+
     healthIsLow() {
         return this.warrior.health() < 20;
     }
@@ -73,6 +84,10 @@ class Player {
 
         if (this.enemyInFront()) {
             return this.act(warrior.attack);
+        }
+
+        if (this.enemyInRange()) {
+            return this.act(warrior.shoot);
         }
 
         if (this.healthIsLow() && !this.takingDamage()) {
