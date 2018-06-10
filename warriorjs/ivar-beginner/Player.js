@@ -5,8 +5,18 @@ class Player {
         action();
     }
 
+    captiveInFront() {
+        if (this.warrior.feel().isUnit()) {
+            return this.warrior.feel().getUnit().isBound();
+        }
+        return false;
+    }
+
     enemyInFront() {
-        return !this.warrior.feel().isEmpty();
+        if (this.warrior.feel().isUnit()) {
+            return this.warrior.feel().getUnit().isEnemy();
+        }
+        return false;
     }
 
     healthIsLow() {
@@ -22,6 +32,10 @@ class Player {
 
         if (!this.health) {
             this.health = warrior.health();
+        }
+
+        if (this.captiveInFront()) {
+            return this.act(warrior.rescue);
         }
 
         if (this.enemyInFront()) {
