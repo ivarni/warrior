@@ -86,7 +86,7 @@ class Player {
             return this.act(warrior.attack);
         }
 
-        if (this.enemyInRange()) {
+        if (this.enemyInRange() && this.health < 20) {
             return this.act(warrior.shoot);
         }
 
