@@ -1,5 +1,7 @@
 class Player {
     act(action) {
+        this.health = this.warrior.health();
+
         action();
     }
 
@@ -9,6 +11,10 @@ class Player {
 
     healthIsLow() {
         return this.warrior.health() < 15;
+    }
+
+    takingDamage() {
+        return this.warrior.health() < this.health;
     }
 
     playTurn(warrior) {
@@ -22,7 +28,7 @@ class Player {
             return this.act(warrior.attack);
         }
 
-        if (this.healthIsLow()) {
+        if (this.healthIsLow() && !this.takingDamage()) {
             return this.act(warrior.rest);
         }
 
