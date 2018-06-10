@@ -1,7 +1,12 @@
+const RIGHT = Symbol('RIGHT');
+const LEFT = Symbol('LEFT');
+
 class Player {
 
     constructor() {
-        this.hasReachedBackWall = false;
+        this.hasReachedLeftWall = false;
+        this.hasReachedRightWall = false;
+        this.direction = RIGHT;
     }
 
     act(action, direction) {
@@ -9,15 +14,7 @@ class Player {
             this.health = this.warrior.health();
         }
 
-        if (this.warrior.feel('backward').isWall()) {
-            this.hasReachedBackWall = true;
-        }
-
-        if (direction) {
-            return action(direction);
-        }
-
-        return action(!this.hasReachedBackWall ? 'backward' : 'forward');
+        return action(direction);
     }
 
     captiveInFront() {
@@ -46,11 +43,28 @@ class Player {
         return this.warrior.health() < this.health;
     }
 
+    wallInFront() {
+        return this.warrior.feel().isWall();
+    }
+
+    turnAround() {
+        if (this.direction === RIGHT) {
+            this.direction = LEFT;
+        } else {
+            this.direction = RIGHT;
+        }
+        return this.act(this.warrior.pivot);
+    }
+
     playTurn(warrior) {
         this.warrior = warrior;
 
         if (!this.health) {
             this.health = warrior.health();
+        }
+
+        if (this.wallInFront()) {
+            return this.turnAround();
         }
 
         if (this.captiveInFront()) {
