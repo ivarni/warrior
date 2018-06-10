@@ -3,10 +3,17 @@ class Player {
         action();
     }
 
+    enemyInFront() {
+        return !this.warrior.feel().isEmpty();
+    }
+
     playTurn(warrior) {
         this.warrior = warrior;
 
-        this.act(warrior.walk);
+        if (this.enemyInFront()) {
+            return this.act(warrior.attack);
+        }
+
+        return this.act(warrior.walk);
     }
 }
-
